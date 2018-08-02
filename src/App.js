@@ -1,32 +1,52 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import MainPage from './MainPage';
+import SearchPage from './SearchPage';
 import './App.css'
 
-class BooksApp extends React.Component {
+class BooksApp extends Component {
+    state = {
+        myBooks: [],
+        searchResults: []
+    }
 
-	state = {
-		books: []
-	}
+    componentDidMount() {
+        BooksAPI.getAll().then((books) => {
+            this.setState({ myBooks: books })
+        })
+    }
 
-	componentDidMount(){
-		BooksAPI.getAll().then((books) => {
-				this.setState( { books } )
-		  })
-	}
+    searchBooks = (query) => {
+        BooksAPI.search(query).then((books) => {
+            this.setState({ searchResults: books })
+        })
+    }
 
-  render() {
-    return (
-      <div className="app">
-	<Route path = "/search" component = {() => (
-          <SearchBooks/>)}/>
-        <Route exact path = '/' component = {() => (
-          <ListBooks/>
-	)}/>
-      </div>
-    )
-  }
+    render() {
+        const { myBooks } = this.state;
+
+        return (
+            <div className="app">
+                <div className="list-books-title">
+                    <h1>MyReads</h1>
+                </div>
+                <Route exact path="/" render={() => (
+                    <MainPage
+                        books={myBooks}
+                    />
+                )} />
+                <Route path="/search" render={( { history } ) => (
+                    <SearchPage
+                        changeUrl={(input) => {
+                            history.push(`/search/${input}`)
+                        }}
+                        searchBooks={this.searchBooks}
+                    />
+                )} />
+            </div>
+        )
+    }
 }
 
-export default BooksApp;
+export default BooksApp
