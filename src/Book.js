@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 class Book extends Component {
+
     render() {
         const { book } = this.props;
         return (
@@ -7,7 +8,12 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail || '' }")` }}></div>
                     <div className="book-shelf-changer">
-                        <select>
+                        <select
+                        onChange={(event) => this.props.moveShelf(
+                          this.props.book, event.target.value
+                        )}
+                                                value={this.props.book.shelf}
+                        >
                             <option value="move" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>

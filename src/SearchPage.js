@@ -4,10 +4,10 @@ class SearchPage extends Component {
     state = {
         query: ''
     }
-    updateQuery = (query) => {
+    /*updateQuery = (query) => {
         this.setState({ query: query })
         this.props.searchBooks(query)
-    }
+    }*/
 
     render() {
         const { query } = this.state;
@@ -20,7 +20,7 @@ class SearchPage extends Component {
                             type="text"
                             placeholder="Search by title or author"
                             value={query}
-                            onChange={(event) => this.updateQuery(event.target.value)}
+                            onChange={(event) => this.moveShelf(event.target.value)}
                         />
                     </div>
                 </div>
