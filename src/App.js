@@ -23,24 +23,26 @@ class BooksApp extends Component {
         })
     }
 
+    moveShelf = (book, shelf) => {
+      BooksAPI.update(book, shelf);
+    }
+
     render() {
         const { myBooks } = this.state;
 
         return (
             <div className="app">
                 <div className="list-books-title">
-                    <h1>MyReads</h1>
+                    <h1><a href="http://localhost:3000/">MyReads</a></h1>
                 </div>
                 <Route exact path="/" render={() => (
                     <MainPage
                         books={myBooks}
+                        moveShelf ={this.moveShelf}
                     />
                 )} />
-                <Route path="/search" render={( { history } ) => (
+                <Route path="/search" render={() => (
                     <SearchPage
-                        changeUrl={(input) => {
-                            history.push(`/search/${input}`)
-                        }}
                         searchBooks={this.searchBooks}
                     />
                 )} />
