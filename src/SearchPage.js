@@ -8,6 +8,12 @@ class SearchPage extends Component {
         searchedBooks: []
     }
 
+    checkShelf = (book) => {
+      const shelf = this.props.books.find((books) => books.id === book.id)
+      book.shelf = shelf ? shelf.shelf : book.shelf = 'none'
+      return book
+    }
+
     makeSearchBooks = (query) => {
       if (query === "")
         {
@@ -15,11 +21,18 @@ class SearchPage extends Component {
         }
         else
         {
-        BooksAPI.search(query).then((searchedBooks) => {
+        BooksAPI.search(query.trim()).then((searchedBooks) => {
 
           if (Array.isArray(searchedBooks)) {
+
+            searchedBooks = searchedBooks.map ((book) => {
+              return this.checkShelf(book)
+            }
+          )
             this.setState({ searchedBooks: searchedBooks })
             }
+
+
             else {
               this.setState({searchedBooks:[]})
             }
@@ -51,15 +64,17 @@ class SearchPage extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                           {
-                            this.state.searchedBooks.map(searchedBook => (
+                            this.state.searchedBooks.map(searchedBook => {
+                              return (
                               <li key={searchedBook.id}>
                               <Book
                                book={searchedBook}
                                moveShelf = {this.props.moveShelf}
-                               shelf= {searchedBook.shelf}
                                />
                               </li>
-                            ))
+                            )
+                            }
+                          )
                           }
                     </ol>
                 </div>

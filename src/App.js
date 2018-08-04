@@ -23,7 +23,6 @@ class BooksApp extends Component {
     }
 
 
-
     moveShelf = (book, shelf) => {
       BooksAPI.update(book, shelf).then(()=> this.refresh())
     }
@@ -44,7 +43,7 @@ class BooksApp extends Component {
                 )} />
                 <Route path="/search" render={() => (
                     <SearchPage
-                        searchedBooks={this.searchedBooks}
+                        books={myBooks}
                         moveShelf ={this.moveShelf}
                     />
                 )} />
