@@ -1,6 +1,12 @@
 # MyReads Project
-
 This is the Udacity FEND course project. It was forked from the template.
+
+## Download and installation
+You can download or clone project from the Github: https://github.com/Vicyn666/project-my-reads
+After that please:
+* install all project dependencies with `npm install`
+* start the development server with `npm start`
+NPM will automatically open the program on host http://localhost:3000/
 
 ## Content
 This is home library with 3 virtual shelves: "read", "currently reading" and "want to read".
