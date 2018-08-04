@@ -8,21 +8,30 @@ class SearchPage extends Component {
         searchedBooks: []
     }
 
-
-
     makeSearchBooks = (query) => {
+      if (query === "")
+        {
+          this.setState({searchedBooks: []})
+        }
+        else
+        {
         BooksAPI.search(query).then((searchedBooks) => {
+
+          if (Array.isArray(searchedBooks)) {
             this.setState({ searchedBooks: searchedBooks })
+            }
+            else {
+              this.setState({searchedBooks:[]})
+            }
+
         })
     }
+  }
 
     updateQuery = (query) => {
         this.setState({ query: query })
         this.makeSearchBooks(query)
     }
-
-
-
 
     render() {
 
@@ -48,13 +57,8 @@ class SearchPage extends Component {
                                book={searchedBook}
                                moveShelf = {this.props.moveShelf}
                                shelf= {searchedBook.shelf}
-
-
-
                                />
-
                               </li>
-
                             ))
                           }
                     </ol>
